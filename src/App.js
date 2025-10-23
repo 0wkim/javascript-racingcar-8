@@ -1,5 +1,9 @@
+import CarController from "./controller/CarController";
+
 class App {
-  async run() {}
+  async run() {
+    CarController();
+  }
 }
 
 export default App;
