@@ -1,6 +1,5 @@
 import CarModel from "../model/CarModel.js";
 
-import CarView from "../view/CarView.js";
 import WinnerView from "../view/WinnerView.js";
 
 import { Console } from "@woowacourse/mission-utils";
@@ -8,7 +7,6 @@ import { Console } from "@woowacourse/mission-utils";
 export default class CarController {
     constructor() {
         this.model = new CarModel();
-        this.carView = new CarView();
         this.winnerView = new WinnerView();
     }
 
@@ -18,10 +16,10 @@ export default class CarController {
         const tryCount = await Console.readLineAsync("시도할 횟수는 몇 회인가요? \n");
 
         this.model.namingCar(inputCarName);
-        this.model.getResult(tryCount);
+        const finalRoundObj = this.model.getResult(tryCount);
 
         // const result = this.model.getResult();
         // Console.print(result);
-        
+        this.winnerView.winnerChoice(finalRoundObj);
     }
 }

@@ -45,13 +45,25 @@ function movingCar(roundResultNumber) {
 
 // 라운드별 결과 도출 
 function showRoundResult(cars, roundResult, carsResultString) {
+    // let lastRecord = {};
+
+    
+    // Console.print("");
+
     for (let i = 0; i < cars.length; i++) {
 
         if (roundResult[i] === "-") carsResultString[i] += "-";
         if (roundResult[i] === "0") carsResultString[i] += "";
 
         Console.print(`${cars[i]} : ${carsResultString[i]}`);
+
+        // 마지막 결과 저장
+        // if (i === (cars.length - 1)) {
+        //     lastRecord[cars[i]] = carsResultString[-1];
+            
+        // }
     }
+    // Console.print(lastRecord);
 
     Console.print("");
 }
@@ -59,6 +71,8 @@ function showRoundResult(cars, roundResult, carsResultString) {
 // 시도 횟수만큼 반복
 function iterateRound(tryCount, roundResultNumber, roundResult, cars) {
     let carsResultString = Array.from({length: cars.length}, () => "");
+
+    Console.print("\n실행 결과");
 
     for (let i = 0; i < Number(tryCount); i++) {
         roundResultNumber = pickNumber(cars);
@@ -69,7 +83,18 @@ function iterateRound(tryCount, roundResultNumber, roundResult, cars) {
         // carsObject = carsRacing(cars, roundResult, carsObject);
     }
     // return carsObject;
-    return roundResult;
+
+    // 마지막 결과
+    Console.print(`마지막 값: ${carsResultString}`);
+
+    const finalRoundObj = cars.reduce((acc, value, index) => {
+        acc[value] = carsResultString[index];
+        return acc;
+    }, {});
+    
+    Console.print(finalRoundObj);
+
+    return finalRoundObj;
 }
 
 // 라운드별 결과 도출 
@@ -82,6 +107,7 @@ export default class CarModel {
         this.roundResultNumber = [];
         this.roundResult = [];
         this.carsObject = {};
+        this.finalRoundObj = {};
         // this.resultString = "";
         // this.everyRoundResult = [];
     }
@@ -96,7 +122,7 @@ export default class CarModel {
 
         // Console.print(this.carsObject);
 
-        iterateRound(tryCount, this.roundResult, this.roundResultNumber, this.cars);
+        return iterateRound(tryCount, this.roundResult, this.roundResultNumber, this.cars);
         
     }
 }
