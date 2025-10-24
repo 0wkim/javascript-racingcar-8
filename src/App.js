@@ -1,8 +1,9 @@
-import CarController from "./controller/CarController";
+import CarController from "./controller/CarController.js";
 
 class App {
   async run() {
-    CarController();
+    const controller = new CarController();
+    await controller.run();
   }
 }
 
