@@ -30,29 +30,50 @@ function movingCar(roundResultNumber) {
 }
 
 // 자동차 수 별 결과 도출, 객체로 관리
-function carsRacing(cars, roundResult, carsObject) {
-    // const addRoundResult = [];
-    for (let i = 0; i < cars.length; i++) {
-        if(!carsObject[cars[i]]) carsObject[cars[i]] = [];
+// function carsRacing(cars, roundResult, carsObject) {
+//     // const addRoundResult = [];
+//     for (let i = 0; i < cars.length; i++) {
+//         if(!carsObject[cars[i]]) carsObject[cars[i]] = [];
 
-        carsObject[cars[i]].push(roundResult[i]);
+//         carsObject[cars[i]].push(roundResult[i]);
+//     }
+
+//     Console.print(carsObject);
+
+//     return carsObject;
+// }
+
+// 라운드별 결과 도출 
+function showRoundResult(cars, roundResult, carsResultString) {
+    for (let i = 0; i < cars.length; i++) {
+
+        if (roundResult[i] === "-") carsResultString[i] += "-";
+        if (roundResult[i] === "0") carsResultString[i] += "";
+
+        Console.print(`${cars[i]} : ${carsResultString[i]}`);
     }
 
-    // Console.print(carsObject);
-
-    return carsObject;
+    Console.print("");
 }
 
 // 시도 횟수만큼 반복
-function iterateRound(tryCount, roundResultNumber, roundResult, carsObject, cars) {
+function iterateRound(tryCount, roundResultNumber, roundResult, cars) {
+    let carsResultString = Array.from({length: cars.length}, () => "");
+
     for (let i = 0; i < Number(tryCount); i++) {
         roundResultNumber = pickNumber(cars);
         roundResult = movingCar(roundResultNumber);
 
-        carsObject = carsRacing(cars, roundResult, carsObject);
+        showRoundResult(cars, roundResult, carsResultString);
+
+        // carsObject = carsRacing(cars, roundResult, carsObject);
     }
-    return carsObject;
+    // return carsObject;
+    return roundResult;
 }
+
+// 라운드별 결과 도출 
+
 
 
 export default class CarModel {
@@ -61,6 +82,8 @@ export default class CarModel {
         this.roundResultNumber = [];
         this.roundResult = [];
         this.carsObject = {};
+        // this.resultString = "";
+        // this.everyRoundResult = [];
     }
 
     namingCar(inputCarName) {
@@ -69,12 +92,12 @@ export default class CarModel {
 
     getResult(tryCount) {
 
-        this.carsObject = iterateRound(tryCount, this.roundResultNumber, this.roundResult, this.carsObject, this.cars);
+        // this.carsObject = iterateRound(tryCount, this.roundResultNumber, this.roundResult, this.carsObject, this.cars);
 
-        Console.print(this.carsObject);
+        // Console.print(this.carsObject);
+
+        iterateRound(tryCount, this.roundResult, this.roundResultNumber, this.cars);
         
     }
 }
 
-
-// result 문자열에 - 추가 -> reduce이용?
