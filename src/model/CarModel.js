@@ -78,7 +78,6 @@ export function finalRoundResult(carsResultString, cars) {
         return acc;
     }, {});
     
-    Console.print(finalRoundObj);
     return finalRoundObj;
 }
 
