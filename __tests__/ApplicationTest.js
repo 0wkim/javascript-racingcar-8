@@ -67,7 +67,6 @@ describe("자동차 경주", () => {
     // given
     const inputs = [""];
     mockQuestions(inputs);
-    // Console.readLineAsync.mockReturnValueOnce("");
   
     // when
     const app = new App();
@@ -80,6 +79,20 @@ describe("자동차 경주", () => {
   test("기타 사용자 입력값 예외 테스트", async () => {
     expect(() => namingCar("pobirey, yw")).toThrow(ERROR_MESSAGES.LONG_CAR_NAME);
     expect(() => namingCar("pobi, pobi")).toThrow(ERROR_MESSAGES.SAME_CAR_NAME);
+    expect(() => namingCar("pobi")).toThrow(ERROR_MESSAGES.ONLY_ONE_CAR);
+  });
+
+  // 시도 횟수 예외 테스트
+  test("시도 횟수 예외 테스트", async () => {
+    // given
+    const inputs = ["pobi,javaji", "51"];
+    mockQuestions(inputs);
+
+    // when
+    const app = new App();
+
+    // then
+    await expect(app.run()).rejects.toThrow(ERROR_MESSAGES.TRY_LIMIT_EXCEEDED);
   });
 
   // 숫자로 전진 여부가 잘 계산되는 지 확인

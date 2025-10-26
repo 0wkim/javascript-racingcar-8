@@ -18,10 +18,14 @@ export function namingCar (inputCarName) {
         }
     });
 
+    if (cars.length === 1) {
+        throw new Error(ERROR_MESSAGES.ONLY_ONE_CAR);
+    }
+
     return cars;
 }
 
-// 중복 이름 감지
+// 자동차 이름 중복 감지
 function isDuplicated(arr) {
     const isDup = arr.some(function(x) {
         return arr.indexOf(x) !== arr.lastIndexOf(x);

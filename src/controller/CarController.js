@@ -24,6 +24,10 @@ export default class CarController {
         if (tryCount === "") {
             throw new Error(ERROR_MESSAGES.EMPTY_TRY_COUNT);
         }
+
+        if (Number(tryCount) > 50) {
+            throw new Error(ERROR_MESSAGES.TRY_LIMIT_EXCEEDED);
+        }
         
         const finalRoundObj = this.model.getResult(tryCount);
         this.winnerView.winnerChoice(finalRoundObj);
