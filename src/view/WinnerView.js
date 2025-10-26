@@ -2,7 +2,7 @@ import { Console } from "@woowacourse/mission-utils";
 
 
 // // 차수별 실행 결과
-function winnerShow(data) {
+export function winnerShow(data) {
     let winner = [];
     let max = "";
 
@@ -19,7 +19,10 @@ function winnerShow(data) {
         }
     }
 
-    Console.print(`최종 우승자 : ${winner.join(', ')}`);
+    const winnerMessage =  `최종 우승자 : ${winner.join(', ')}`;
+    Console.print(winnerMessage);
+
+    return winnerMessage;
 }
  
 export default class WinnerView {

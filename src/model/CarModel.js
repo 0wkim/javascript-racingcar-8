@@ -16,22 +16,8 @@ function pickNumber(cars) {
     return roundResultNumber; // [0, 4, 5, 7]
 }
 
-// 숫자로 전진, 멈춤 구분 
-// function movingCar(roundResultNumber) {
-//     const roundResult = [];
-
-//     roundResultNumber.forEach((number) => {
-//         if (number >= 4) roundResult.push("-");
-//         if (number < 4) roundResult.push("0");
-//     });
-
-//     Console.print(roundResult);
-//     return roundResult; 
-// }
-
-
 // 라운드별 결과 도출 
-function showRoundResult(cars, roundResultNumber, carsResultString) {
+export function showRoundResult(cars, roundResultNumber, carsResultString) {
     for (let i = 0; i < cars.length; i++) {
 
         if (roundResultNumber[i] >= 4) carsResultString[i] += "-";
@@ -39,7 +25,6 @@ function showRoundResult(cars, roundResultNumber, carsResultString) {
 
         Console.print(`${cars[i]} : ${carsResultString[i]}`);
     }
-
     Console.print("");
 }
 
@@ -61,7 +46,7 @@ function iterateRound(tryCount, roundResultNumber, cars) {
 }
 
 // 마지막 결과만 추출
-function finalRoundResult(carsResultString, cars) {
+export function finalRoundResult(carsResultString, cars) {
     const finalRoundObj = cars.reduce((acc, value, index) => {
         acc[value] = carsResultString[index];
         return acc;

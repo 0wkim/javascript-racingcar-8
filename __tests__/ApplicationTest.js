@@ -1,6 +1,9 @@
 import App from "../src/App.js";
 import { MissionUtils } from "@woowacourse/mission-utils";
 
+import { showRoundResult } from "../src/model/CarModel.js";
+import { winnerShow } from "../src/view/WinnerView.js";
+
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
 
@@ -56,5 +59,35 @@ describe("자동차 경주", () => {
 
     // then
     await expect(app.run()).rejects.toThrow("[ERROR]");
+  });
+
+  // 숫자로 전진 여부가 잘 계산되는 지 확인
+  test("전진 테스트", async () => {
+    // given
+    const cars = ["pobi", "rey", "yw"];
+    const roundResultNumber = [4, 3, 9];  
+    const carsResultString = ["", "", ""];
+
+    // when
+    showRoundResult(cars, roundResultNumber, carsResultString);
+
+    // then
+    expect(carsResultString).toEqual(["-", "", "-"]);
+  });
+
+  // 우승자 출력 확인
+  test("우승자 판별 테스트", async () => {
+    // given
+    const data = {
+      pobi: "---",
+      rey: "-", 
+      yw: "---"
+    }
+
+    // when
+    const winner = winnerShow(data);
+
+    // then
+    expect(winner).toEqual("최종 우승자 : pobi, yw");
   });
 });
