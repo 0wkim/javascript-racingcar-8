@@ -1,7 +1,6 @@
 import { Console } from "@woowacourse/mission-utils";
 
-
-// // 차수별 실행 결과
+// 우승자 추출 및 최종 우승자 출력
 export function winnerShow(data) {
     let winner = [];
     let max = "";
@@ -27,8 +26,6 @@ export function winnerShow(data) {
  
 export default class WinnerView {
     winnerChoice(data) {
-        Console.print(`뷰 내부 입니다.`);
-    
         winnerShow(data);
     }
 }

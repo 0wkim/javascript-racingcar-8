@@ -1,15 +1,11 @@
 import { Console, Random } from "@woowacourse/mission-utils";
 
-import { ERROR_MESSAGES } from "../constants/ErrorMessages";
+import { ERROR_MESSAGES } from "../constants/ErrorMessages.js";
 
 // 자동차 이름 분리
 export function namingCar (inputCarName) {
     const splitInput = inputCarName.split(',');
     const cars = splitInput.map((car) => car.trim());
-
-    if (cars[0] === "" && cars.length === 1) {
-        throw new Error(ERROR_MESSAGES.EMPTY_CAR_NAME); 
-    }
 
     const duplicatedName = isDuplicated(cars);
     if (duplicatedName) {
@@ -37,11 +33,11 @@ function isDuplicated(arr) {
 // 랜덤 숫자 추출 후, 라운드 별 각 숫자 저장
 function pickNumber(cars) {
     const roundResultNumber = [];
-    for (let i=0; i < cars.length; i++) { // 이걸 car로 하지말고 시도횟수로 해서 자동차 하나씩 관리
+    for (let i=0; i < cars.length; i++) { 
         roundResultNumber.push(Random.pickNumberInRange(0, 9));
     }
 
-    return roundResultNumber; // [0, 4, 5, 7]
+    return roundResultNumber; 
 }
 
 // 라운드별 결과 도출 
@@ -56,7 +52,7 @@ export function showRoundResult(cars, roundResultNumber, carsResultString) {
     Console.print("");
 }
 
-// 시도 횟수만큼 반복
+// 시도 횟수만큼 반복 후, 최종 결과 return
 function iterateRound(tryCount, roundResultNumber, cars) {
     let carsResultString = Array.from({length: cars.length}, () => "");
 
@@ -64,8 +60,6 @@ function iterateRound(tryCount, roundResultNumber, cars) {
 
     for (let i = 0; i < Number(tryCount); i++) {
         roundResultNumber = pickNumber(cars);
-        // roundResult = movingCar(roundResultNumber);
-
         showRoundResult(cars, roundResultNumber, carsResultString);
     }
 
@@ -73,7 +67,7 @@ function iterateRound(tryCount, roundResultNumber, cars) {
     return carsResultString;
 }
 
-// 마지막 결과만 추출
+// 마지막 결과를 "자동차 이름: 결과" 객체로 변환
 export function finalRoundResult(carsResultString, cars) {
     const finalRoundObj = cars.reduce((acc, value, index) => {
         acc[value] = carsResultString[index];
@@ -81,7 +75,6 @@ export function finalRoundResult(carsResultString, cars) {
     }, {});
     
     Console.print(finalRoundObj);
-
     return finalRoundObj;
 }
 
@@ -90,7 +83,6 @@ export default class CarModel {
         this.cars = [];
         this.roundResultNumber = [];
         this.carsResult = [];
-        // this.roundResult = [];
     }
 
     namingCar(inputCarName) {
