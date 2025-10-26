@@ -1,8 +1,9 @@
 import App from "../src/App.js";
-import { MissionUtils } from "@woowacourse/mission-utils";
+import { Console, MissionUtils } from "@woowacourse/mission-utils";
 
-import { showRoundResult } from "../src/model/CarModel.js";
+import { namingCar, showRoundResult } from "../src/model/CarModel.js";
 import { winnerShow } from "../src/view/WinnerView.js";
+import { ERROR_MESSAGES } from "../src/constants/ErrorMessages.js";
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -59,6 +60,32 @@ describe("자동차 경주", () => {
 
     // then
     await expect(app.run()).rejects.toThrow("[ERROR]");
+
+    
+  });
+
+  // 시도 횟수 빈 값 예외 테스트
+  test("시도횟수 빈 값 예외 테스트", async () => {
+    // given
+    Console.readLineAsync.mockReturnValueOnce("pobi", "rey").mockReturnValueOnce("");
+  
+    // when
+    const app = new App();
+
+    // then
+    await expect(app.run()).rejects.toThrow(ERROR_MESSAGES.EMPTY_TRY_COUNT);
+  });
+
+  // 기타 사용자 입력 값 예외 테스트
+  test("기타 사용자 입력값 예외 테스트", async () => {
+    // 입력값이 빈 경우
+    expect(() => namingCar("")).toThrow(ERROR_MESSAGES.EMPTY_CAR_NAME);
+
+    // 자동차 이름이 5자를 넘는 경우
+    expect(() => namingCar("pobirey, yw")).toThrow(ERROR_MESSAGES.LONG_CAR_NAME);
+
+    // 자동차 이름이 중복인 경우
+    expect(() => namingCar("pobi, pobi")).toThrow(ERROR_MESSAGES.SAME_CAR_NAME);
   });
 
   // 숫자로 전진 여부가 잘 계산되는 지 확인

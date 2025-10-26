@@ -1,9 +1,37 @@
 import { Console, Random } from "@woowacourse/mission-utils";
 
+import { ERROR_MESSAGES } from "../constants/ErrorMessages";
+
 // 자동차 이름 분리
-function namingCar (inputCarName) {
-    const cars = inputCarName.split(',');
-    return cars.map((car) => car.trim());
+export function namingCar (inputCarName) {
+    const splitInput = inputCarName.split(',');
+    const cars = splitInput.map((car) => car.trim());
+
+    if (cars[0] === "" && cars.length === 1) {
+        throw new Error(ERROR_MESSAGES.EMPTY_CAR_NAME); 
+    }
+
+    const duplicatedName = isDuplicated(cars);
+    if (duplicatedName) {
+        throw new Error(ERROR_MESSAGES.SAME_CAR_NAME);
+    }
+
+    cars.forEach((car) => {
+        if (car.length >= 6) {
+            throw new Error(ERROR_MESSAGES.LONG_CAR_NAME);
+        }
+    });
+
+    return cars;
+}
+
+// 중복 이름 감지
+function isDuplicated(arr) {
+    const isDup = arr.some(function(x) {
+        return arr.indexOf(x) !== arr.lastIndexOf(x);
+    });
+
+    return isDup;
 }
 
 // 랜덤 숫자 추출 후, 라운드 별 각 숫자 저장
