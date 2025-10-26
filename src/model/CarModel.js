@@ -56,9 +56,12 @@ function iterateRound(tryCount, roundResultNumber, cars) {
         showRoundResult(cars, roundResultNumber, carsResultString);
     }
 
-    // 마지막 결과
-    Console.print(`마지막 값: ${carsResultString}`);
+    // 최종 결과
+    return carsResultString;
+}
 
+// 마지막 결과만 추출
+function finalRoundResult(carsResultString, cars) {
     const finalRoundObj = cars.reduce((acc, value, index) => {
         acc[value] = carsResultString[index];
         return acc;
@@ -73,6 +76,7 @@ export default class CarModel {
     constructor() {
         this.cars = [];
         this.roundResultNumber = [];
+        this.carsResult = [];
         // this.roundResult = [];
     }
 
@@ -81,7 +85,8 @@ export default class CarModel {
     }
 
     getResult(tryCount) {
-        return iterateRound(tryCount, this.roundResultNumber, this.cars);
+        this.carsResult = iterateRound(tryCount, this.roundResultNumber, this.cars);
+        return finalRoundResult(this.carsResult, this.cars);
     }
 }
 
