@@ -18,8 +18,6 @@ export default class CarController {
         this.model.namingCar(inputCarName);
         const finalRoundObj = this.model.getResult(tryCount);
 
-        // const result = this.model.getResult();
-        // Console.print(result);
         this.winnerView.winnerChoice(finalRoundObj);
     }
 }

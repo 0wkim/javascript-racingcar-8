@@ -17,72 +17,44 @@ function pickNumber(cars) {
 }
 
 // 숫자로 전진, 멈춤 구분 
-function movingCar(roundResultNumber) {
-    const roundResult = [];
+// function movingCar(roundResultNumber) {
+//     const roundResult = [];
 
-    roundResultNumber.forEach((number) => {
-        if (number >= 4) roundResult.push("-");
-        if (number < 4) roundResult.push("0");
-    });
+//     roundResultNumber.forEach((number) => {
+//         if (number >= 4) roundResult.push("-");
+//         if (number < 4) roundResult.push("0");
+//     });
 
-    Console.print(roundResult);
-    return roundResult; 
-}
-
-// 자동차 수 별 결과 도출, 객체로 관리
-// function carsRacing(cars, roundResult, carsObject) {
-//     // const addRoundResult = [];
-//     for (let i = 0; i < cars.length; i++) {
-//         if(!carsObject[cars[i]]) carsObject[cars[i]] = [];
-
-//         carsObject[cars[i]].push(roundResult[i]);
-//     }
-
-//     Console.print(carsObject);
-
-//     return carsObject;
+//     Console.print(roundResult);
+//     return roundResult; 
 // }
 
+
 // 라운드별 결과 도출 
-function showRoundResult(cars, roundResult, carsResultString) {
-    // let lastRecord = {};
-
-    
-    // Console.print("");
-
+function showRoundResult(cars, roundResultNumber, carsResultString) {
     for (let i = 0; i < cars.length; i++) {
 
-        if (roundResult[i] === "-") carsResultString[i] += "-";
-        if (roundResult[i] === "0") carsResultString[i] += "";
+        if (roundResultNumber[i] >= 4) carsResultString[i] += "-";
+        if (roundResultNumber[i] < 4) carsResultString[i] += "";
 
         Console.print(`${cars[i]} : ${carsResultString[i]}`);
-
-        // 마지막 결과 저장
-        // if (i === (cars.length - 1)) {
-        //     lastRecord[cars[i]] = carsResultString[-1];
-            
-        // }
     }
-    // Console.print(lastRecord);
 
     Console.print("");
 }
 
 // 시도 횟수만큼 반복
-function iterateRound(tryCount, roundResultNumber, roundResult, cars) {
+function iterateRound(tryCount, roundResultNumber, cars) {
     let carsResultString = Array.from({length: cars.length}, () => "");
 
     Console.print("\n실행 결과");
 
     for (let i = 0; i < Number(tryCount); i++) {
         roundResultNumber = pickNumber(cars);
-        roundResult = movingCar(roundResultNumber);
+        // roundResult = movingCar(roundResultNumber);
 
-        showRoundResult(cars, roundResult, carsResultString);
-
-        // carsObject = carsRacing(cars, roundResult, carsObject);
+        showRoundResult(cars, roundResultNumber, carsResultString);
     }
-    // return carsObject;
 
     // 마지막 결과
     Console.print(`마지막 값: ${carsResultString}`);
@@ -97,19 +69,11 @@ function iterateRound(tryCount, roundResultNumber, roundResult, cars) {
     return finalRoundObj;
 }
 
-// 라운드별 결과 도출 
-
-
-
 export default class CarModel {
     constructor() {
         this.cars = [];
         this.roundResultNumber = [];
-        this.roundResult = [];
-        this.carsObject = {};
-        this.finalRoundObj = {};
-        // this.resultString = "";
-        // this.everyRoundResult = [];
+        // this.roundResult = [];
     }
 
     namingCar(inputCarName) {
@@ -117,13 +81,7 @@ export default class CarModel {
     }
 
     getResult(tryCount) {
-
-        // this.carsObject = iterateRound(tryCount, this.roundResultNumber, this.roundResult, this.carsObject, this.cars);
-
-        // Console.print(this.carsObject);
-
-        return iterateRound(tryCount, this.roundResult, this.roundResultNumber, this.cars);
-        
+        return iterateRound(tryCount, this.roundResultNumber, this.cars);
     }
 }
 
