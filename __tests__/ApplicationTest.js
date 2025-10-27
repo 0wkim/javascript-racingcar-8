@@ -85,7 +85,7 @@ describe("자동차 경주", () => {
   // 시도 횟수 예외 테스트
   test("시도 횟수 예외 테스트", async () => {
     // given
-    const inputs = ["pobi,javaji", "51"];
+    const inputs = ["pobi,java", "51"];
     mockQuestions(inputs);
 
     // when
